@@ -9,8 +9,6 @@ import ScreenLoader, { loaderRef } from './Src/Components/Loader/ScreenLoader';
 import * as firebase from 'firebase'
 import { getToken } from './Src/Storage/Users';
 import messaging from '@react-native-firebase/messaging';
-import { postData } from './Src/Selectors/Screen';
-import { UDPATE_TOKEN } from './Src/Const/Api';
 
 var firebaseConfig = {
   apiKey: "AIzaSyBOJfO3onN9shb3ZqyLgucuqGleA3ywGGw",
@@ -39,8 +37,6 @@ export default function App() {
       }
     })
   }
-
-
 
 
   // const conf = {

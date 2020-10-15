@@ -2,6 +2,7 @@ import React, { useRef, useEffect } from 'react';
 import { View, TouchableOpacity, ScrollView, FlatList } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { render } from 'react-dom';
+import { RandomString } from '../../Helper/General';
 function PilTabBar({ state, descriptors, navigation, position, component, activeColor }) {
   // console.log(state.index);
     // this.flatlist
@@ -67,6 +68,7 @@ function PilTabBar({ state, descriptors, navigation, position, component, active
             }
             return (
               <TouchableOpacity
+                key={RandomString(10)}
                 delayPressIn={50}
                 accessibilityRole="button"
                 accessibilityStates={isFocused ? ['selected'] : []}
