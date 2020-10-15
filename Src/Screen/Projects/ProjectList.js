@@ -20,7 +20,7 @@ import Snackbar from 'react-native-snackbar';
 import { showScreenLoader, hideScreenLoader } from '../../Components/Loader/ScreenLoader';
 import ListDataLazy from '../../Components/List/ListDataLazy';
 import { RandomString } from '../../Helper/General';
-import { setProjects, setSelectedProject } from '../../Actions/Module/Projects';
+import { deleteProject, setProjects, setSelectedProject } from '../../Actions/Module/Projects';
 
 const ProjectList = memo(({dispatch, navigation, projects, screen, data, render, ...props}) => {
  
@@ -83,16 +83,20 @@ const ProjectList = memo(({dispatch, navigation, projects, screen, data, render,
     } 
 
     const confirmRemove = () => {
+      
+      const { deleteProject } = props
       alert.current.hide();
       showScreenLoader("Removing")
       deleteData(DELETE_PROJECT+projects.selected.Id, controller)
       .then(result => {
         hideScreenLoader();
-        loadData();
+        // loadData();
         Snackbar.show({
           text:projects.selected.Name + " successfully removed",
           duration:Snackbar.LENGTH_SHORT
         });
+        
+        deleteProject(projects.selected);
       })
       .catch(err => {
         hideScreenLoader();
@@ -225,7 +229,7 @@ const mapStateToProps = (state) => {
     }
 }
 
-const mapDispatchToProps = { setProjects, setSelectedProject, screenLoading }
+const mapDispatchToProps = { deleteProject, setProjects, setSelectedProject, screenLoading }
 
 export default connect(
   mapStateToProps,

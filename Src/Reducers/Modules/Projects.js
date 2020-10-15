@@ -19,6 +19,16 @@ const project = (state = projectState, action) => {
                 lastAdded:action.lastAdded,
                 list:[action.lastAdded, ...state.list],
             };
+        case actionType.DELETE_PROJECT:
+            let data = [];
+            data = state.list;
+            let index = data.findIndex(x => x.Id == action.delete.Id);
+            data.splice(index, 1);
+            return {
+                ...state,
+                selected:{},
+                list:data,
+            };
         default :
             return state;
     }

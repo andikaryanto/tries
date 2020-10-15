@@ -62,7 +62,6 @@ const ProjectCreationScreen = memo(({navigation, route, screen, dispatch}) => {
     const onSave = () => {
         
         form.Teams = team();
-        console.log(form)
         showScreenLoader("Saving");
         
         postData(CREATE_PROJECTS, controller, form, {}

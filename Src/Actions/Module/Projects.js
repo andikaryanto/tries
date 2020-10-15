@@ -4,6 +4,11 @@ export const setProjects = (listproject) => ({
     list : listproject
 });
 
+export const deleteProject = (project) => ({
+    type: actionType.DELETE_PROJECT,
+    delete:project
+});
+
 export const setSelectedProject = (project) => ({
     type: actionType.SET_SELECTED_PROJECT,
     selected:project
