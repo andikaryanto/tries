@@ -1,6 +1,7 @@
 import React, { memo, useState, useEffect } from 'react';
 import { getUsername } from '../../Storage/Users';
 import Texts from '../../Components/Text'
+import { connect } from 'react-redux';
 
 const Username = memo(({ startText,...props}) => {
     const [username, setUsername] = useState("");
@@ -17,4 +18,17 @@ const Username = memo(({ startText,...props}) => {
     return <Texts {...props}>{beforeText}{username}</Texts>
 })
 
-export default Username;
+const mapStateToProps = state => {
+    const { screen } = state;
+    return {
+        screen:screen
+    }
+}
+
+
+// const mapDispatchToProps = { setMineTask, screenLoading }
+
+export default connect(
+    mapStateToProps,
+null
+)(Username);

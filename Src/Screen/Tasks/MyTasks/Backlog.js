@@ -191,7 +191,6 @@ const Backlog = memo(({navigation, route, backlogs, screen, ...props}) => {
 
 const mapStateToProps = state => {
     const { task, screen } = state;
-    console.log(task);
     return {
         screen:screen,
         backlogs:task.mine.backlogs || []

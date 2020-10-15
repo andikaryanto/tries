@@ -7,10 +7,20 @@ import { StyleSheet, TouchableWithoutFeedback, View, ImageBackground } from 'rea
 
 const MyAvatar = memo(({style, onPress, ...props}) => {
 
-    let styles = {
-        ...allStyles.tinyLogo,
+  const allStyles = StyleSheet.create({
+      container: {
+        paddingTop: 50,
+      },
+      tinyLogo: {
+        width: 50,
+        height: 50,
         ...style,
-    }
+      },
+      logo: {
+        width: 66,
+        height: 58,
+      },
+    });
 
 
     const [photo, setPhoto] = useState(null);
@@ -18,7 +28,6 @@ const MyAvatar = memo(({style, onPress, ...props}) => {
     useEffect(() => {
         getPhoto()
         .then(photo => {
-            console.log("avatar", photo);
             setPhoto(photo)
         })
     }, []);
@@ -27,7 +36,7 @@ const MyAvatar = memo(({style, onPress, ...props}) => {
         return <TouchableWithoutFeedback  {...props}  onPress={onPress} >
             <View>
                 <ImageBackground
-                    style={styles}
+                    style={allStyles.tinyLogo}
                     imageStyle={{ borderRadius: 15 }}
                     source={(photo == null || photo == "")  ? require('../../Assets/Img/blankphoto.png') : {uri:BASE_URL+photo}}
                     />
@@ -45,16 +54,3 @@ const MyAvatar = memo(({style, onPress, ...props}) => {
 });
 export default MyAvatar;
 
-const allStyles = StyleSheet.create({
-    container: {
-      paddingTop: 50,
-    },
-    tinyLogo: {
-      width: 50,
-      height: 50,
-    },
-    logo: {
-      width: 66,
-      height: 58,
-    },
-  });

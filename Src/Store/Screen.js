@@ -1,5 +1,6 @@
 const screenState = {
     loading: false,
+    darkmode:true,
     message:""
 };
 

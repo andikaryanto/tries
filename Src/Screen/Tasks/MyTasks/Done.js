@@ -191,7 +191,6 @@ const Done = memo(({navigation, route, done, screen, ...props}) => {
 
 const mapStateToProps = state => {
     const { task, screen } = state;
-    console.log(task);
     return {
         screen:screen,
         done:task.mine.done || []

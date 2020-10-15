@@ -1,7 +1,7 @@
 import React, { memo, useEffect } from 'react';
 import Aux from '../../Components/Auxx';
 import Foundation from '../../Components/Foundation';
-import { LIGHT, WHITE, MAIN, MAIN_SECOND, FONT, GREY, MAIN_FOURTH, MAIN_CONTRAST, WARNING } from '../../Const/Colors';
+import { LIGHT, WHITE, MAIN, MAIN_SECOND, FONT, GREY, MAIN_FOURTH, MAIN_CONTRAST, WARNING, DARK, DARK_SECOND, MAIN_THIRD } from '../../Const/Colors';
 import { StatusBar, StyleSheet } from 'react-native';
 import ContainerBox from '../../Components/Container/ContainerBox';
 import Column from '../../Components/Column';
@@ -21,11 +21,23 @@ import Position from '../Components/Position';
 import { screenLoading } from '../../Actions/Screen';
 import ProgressBarLine from '../../Components/ProgressBar/ProgressBarLine';
 
-const ProjectsScreen = memo(({navigation, ...props}) => {
-
+const ProjectsScreen = memo(({navigation, screen, ...props}) => {
+    const styleAll = StyleSheet.create({
+        welcomeText:{
+            fontSize:17,
+            color:screen.darkmode ? GREY : MAIN_SECOND,
+        },    
+        nameText: {
+            fontSize: 25,
+            fontWeight: "500",
+            flex: 4, 
+            flexWrap: 'wrap',
+            color:screen.darkmode ? MAIN_THIRD : FONT,
+        },
+    });
     
     return <Aux>
-            <Foundation style={{backgroundColor:LIGHT}} scrollable = {false}>
+            <Foundation style={{backgroundColor:screen.darkmode ? DARK : LIGHT}} scrollable = {false}>
                 <StatusBar backgroundColor="rgba(0, 0, 0, 0.3)" barStyle="light-content" hidden={false} translucent={true}/>
                 <ContainerBox style={{marginTop:40, flex:1}}>
                     <Column  style={{ paddingHorizontal:20}}> 
@@ -35,7 +47,7 @@ const ProjectsScreen = memo(({navigation, ...props}) => {
                                 <Row>
                                     <Username numberOfLines={1} 
                                         ellipsizeMode='tail' 
-                                        style={{fontSize:30, color:MAIN}} startText="Hello"/>
+                                        style={{fontSize:30, color:screen.darkmode ? MAIN_THIRD : MAIN}} startText="Hello"/>
                                 </Row>
                                 <Position />
 
@@ -53,11 +65,11 @@ const ProjectsScreen = memo(({navigation, ...props}) => {
                             {/* <ButtonIconCircle  rippleColor={WHITE} style={{backgroundColor:MAIN, elevation:0,  }} color={WHITE} size ={20} icon={"plus"} onPress={() => dispatch(screenLoading())}></ButtonIconCircle> */}
                             {/* <Column style={{backgroundColor:LIGHT, borderRadius:50}}> */}
 
-                                <ButtonIconCircle  rippleColor={WHITE} style={{backgroundColor:MAIN, elevation:0 }} color={WHITE} size ={20} icon={"plus"} onPress={() => navigation.navigate("ProjectCreateScreen")}></ButtonIconCircle>
+                                <ButtonIconCircle  rippleColor={WHITE} style={{backgroundColor:screen.darkmode ? MAIN_SECOND : MAIN, elevation:0 }} color={screen.darkmode ? LIGHT : WHITE} size ={20} icon={"plus"} onPress={() => navigation.navigate("ProjectCreateScreen")}></ButtonIconCircle>
                             {/* </Column> */}
                         </Row>
                     </Column>
-                    <Column style={{justifyContent:"center",paddingHorizontal:10, flex:1, backgroundColor:WHITE}}>
+                    <Column style={{justifyContent:"center",paddingHorizontal:10, flex:1, backgroundColor:screen.darkmode ? DARK_SECOND : WHITE}}>
         
                         <ProjectList navigation={navigation}/>
                     </Column>
@@ -68,18 +80,19 @@ const ProjectsScreen = memo(({navigation, ...props}) => {
 
 });
 
-const styleAll = StyleSheet.create({
-    welcomeText:{
-        fontSize:17,
-        color:MAIN_SECOND,
-    },    
-    nameText: {
-        fontSize: 25,
-        fontWeight: "500",
-        flex: 4, 
-        flexWrap: 'wrap',
-        color:FONT,
-    },
-});
 
-export default ProjectsScreen;
+
+const mapStateToProps = state => {
+    const { screen } = state;
+    return {
+        screen:screen
+    }
+}
+
+
+// const mapDispatchToProps = { setMineTask, screenLoading }
+
+export default connect(
+    mapStateToProps,
+null
+)(ProjectsScreen);

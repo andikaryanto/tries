@@ -1,5 +1,5 @@
 import React, { memo, useEffect, useState, useRef } from 'react';
-import { WHITE, MAIN, MAIN_FOURTH, FONT, WARNING, MAIN_CONTRAST, MAIN_SECOND, GREY, LIGHT } from '../../Const/Colors';
+import { WHITE, MAIN, MAIN_FOURTH, FONT, WARNING, MAIN_CONTRAST, MAIN_SECOND, GREY, LIGHT, DARK_SECOND, MAIN_THIRD } from '../../Const/Colors';
 import Row from '../../Components/Row';
 import Texts from '../../Components/Text';
 import CardRectangle from '../../Components/Card/CardRectangle';
@@ -131,7 +131,7 @@ const ProjectList = memo(({dispatch, navigation, projects, screen, data, render,
           <CardRectangle  
           padding={10}
             rippleColor={MAIN_FOURTH} 
-            style={{ flex:3,backgroundColor:WHITE, borderBottomColor: MAIN_FOURTH, borderBottomWidth: 0.5}} 
+            style={{ flex:3,backgroundColor:screen.darkmode ? DARK_SECOND : WHITE, borderBottomColor: screen.darkmode ? MAIN_SECOND : MAIN_FOURTH, borderBottomWidth: 0.5}} 
             onPress={() => navigation.navigate("ProjectEachScreen", {projectId:item.Id, projectName:item.Name, isYours:item.IsYours })}
             onLongPress={() => itemLongPress(item)}
           >
@@ -143,11 +143,11 @@ const ProjectList = memo(({dispatch, navigation, projects, screen, data, render,
                   
                   
               </Row>
-              <Texts numberOfLines={1} ellipsizeMode='tail' style={{color:MAIN,fontSize:20, fontWeight:"500", marginBottom:5}}>{item.Name}</Texts>
-              <Texts numberOfLines={3} ellipsizeMode='tail' style={{color:MAIN_SECOND}}>{item.Description}</Texts>
+              <Texts numberOfLines={1} ellipsizeMode='tail' style={{color:screen.darkmode ? MAIN_THIRD : MAIN,fontSize:20, fontWeight:"500", marginBottom:5}}>{item.Name}</Texts>
+              <Texts numberOfLines={3} ellipsizeMode='tail' style={{color:screen.darkmode ? GREY : MAIN_SECOND}}>{item.Description}</Texts>
               <Row style={{alignItems:"center", justifyContent: 'flex-end', marginTop:10}}>
                   <Texts style={{color:GREY}}> Created By</Texts>
-                  <Texts style={{color:MAIN}}> {item.CreatedBy}</Texts>
+                  <Texts style={{color:screen.darkmode ? MAIN_THIRD : MAIN}}> {item.CreatedBy}</Texts>
               </Row>
           </CardRectangle>
       </Row>
@@ -164,7 +164,7 @@ const ProjectList = memo(({dispatch, navigation, projects, screen, data, render,
         // maxSwipeDistance={240}
         // renderQuickActions={QuickActions}
         keyExtractor ={item => item.Id} 
-        style={{flex:1}} 
+        style={{flex:1, }} 
         contentContainerStyle={{flexGrow: 1}} 
         isLoading={screen.loading}
       />

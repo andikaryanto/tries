@@ -10,3 +10,6 @@ export const GREY ="#9e9e9e";
 export const WHITE ="#fff";
 export const BLACK ="#000";
 export const WARNING ="#ff5a1a";
+
+export const DARK = "#353535"
+export const DARK_SECOND = "#505050"
