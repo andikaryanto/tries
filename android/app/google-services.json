@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "556246402870",
+    "firebase_url": "https://scrum-fddcc.firebaseio.com",
+    "project_id": "scrum-fddcc",
+    "storage_bucket": "scrum-fddcc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:556246402870:android:33140f9899067d2d37d597",
+        "android_client_info": {
+          "package_name": "com.nayodev.scrum"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "556246402870-finvua5jh9ievo4mb98qd5hhh7sn40j7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBOJfO3onN9shb3ZqyLgucuqGleA3ywGGw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "556246402870-finvua5jh9ievo4mb98qd5hhh7sn40j7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

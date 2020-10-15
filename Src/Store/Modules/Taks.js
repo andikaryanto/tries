@@ -1,0 +1,31 @@
+const taskState = {
+    list:[],
+    selected:{},
+    lastAdded:{},
+    mine:{},
+    taskdetails:[],
+    statusFilter:[
+        {
+            value:1,
+            text:"New",
+            selected:false
+        },{
+            value:2,
+            text:"Plan",
+            selected:false
+        },{
+            value:3,
+            text:"Doing",
+            selected:false
+        },{
+            value:4,
+            text:"Check",
+            selected:false
+        },{
+            value:5,
+            text:"Done",
+            selected:false
+        }
+    ]
+}
+export default taskState;
