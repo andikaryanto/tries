@@ -1,5 +1,5 @@
 import React, { memo, useEffect, useState, useRef } from 'react';
-import { WHITE, MAIN, MAIN_FOURTH, FONT, WARNING, MAIN_CONTRAST, MAIN_SECOND, GREY, LIGHT, DARK_SECOND, MAIN_THIRD } from '../../Const/Colors';
+import { WHITE, MAIN, MAIN_FOURTH, FONT, WARNING, MAIN_CONTRAST, MAIN_SECOND, GREY, LIGHT, DARK_SECOND, MAIN_THIRD, DARK } from '../../Const/Colors';
 import Row from '../../Components/Row';
 import Texts from '../../Components/Text';
 import CardRectangle from '../../Components/Card/CardRectangle';
@@ -131,7 +131,7 @@ const ProjectList = memo(({dispatch, navigation, projects, screen, data, render,
           <CardRectangle  
           padding={10}
             rippleColor={MAIN_FOURTH} 
-            style={{ flex:3,backgroundColor:screen.darkmode ? DARK_SECOND : WHITE, borderBottomColor: screen.darkmode ? MAIN_SECOND : MAIN_FOURTH, borderBottomWidth: 0.5}} 
+            style={{ flex:3,backgroundColor:screen.darkmode ? DARK_SECOND : WHITE, borderBottomColor: screen.darkmode ? DARK : MAIN_FOURTH, borderBottomWidth: 0.5}} 
             onPress={() => navigation.navigate("ProjectEachScreen", {projectId:item.Id, projectName:item.Name, isYours:item.IsYours })}
             onLongPress={() => itemLongPress(item)}
           >
@@ -156,7 +156,7 @@ const ProjectList = memo(({dispatch, navigation, projects, screen, data, render,
     return <>
       <ListDataLazy
       // inverted={true} 
-        refreshControl={<RefreshControl refreshing={screen.loading} onRefresh={onRefresh} />} 
+        refreshControl={<RefreshControl progressBackgroundColor={screen.darkmode ? DARK_SECOND : WHITE} colors={screen.darkmode ? [GREY] : [MAIN_SECOND]} refreshing={screen.loading} onRefresh={onRefresh} />} 
         alwaysBounceVertical={true} 
         showsVerticalScrollIndicator={false} 
         renderItem={renderList} 

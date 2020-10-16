@@ -6,7 +6,7 @@ import ContainerBox from '../../Components/Container/ContainerBox';
 import Foundation from '../../Components/Foundation';
 import Row from '../../Components/Row';
 import Texts from '../../Components/Text';
-import { FONT, LIGHT, MAIN, MAIN_CONTRAST, MAIN_FOURTH, MAIN_SECOND, MAIN_THIRD, WHITE } from '../../Const/Colors';
+import { DARK, DARK_SECOND, FONT, GREY, LIGHT, MAIN, MAIN_CONTRAST, MAIN_FOURTH, MAIN_SECOND, MAIN_THIRD, WHITE } from '../../Const/Colors';
 import { connect } from 'react-redux';
 import ButtonIconCircle from '../../Components/Button/ButtonIconCircle';
 import ListDataLazy from '../../Components/List/ListDataLazy';
@@ -23,6 +23,19 @@ const SprintScreen = memo(({navigation, screen, sprint, route, dispatch, ...prop
 
     let controller = new AbortController();
 
+    const styleAll = StyleSheet.create({
+        welcomeText:{
+            fontSize:17,
+            color:screen.darkmode ? GREY : MAIN_SECOND,
+        },    
+        nameText: {
+            fontSize: 25,
+            fontWeight: "500",
+            flex: 4, 
+            flexWrap: 'wrap',
+            color:screen.darkmode ? MAIN_THIRD : FONT,
+        },
+    });
 
     const createSprint = () => {
         navigation.navigate("CreateSprintScreen", {projectName:projectName, projectId:projectId})
@@ -66,15 +79,15 @@ const SprintScreen = memo(({navigation, screen, sprint, route, dispatch, ...prop
 
     const renderSprint = ({item, index}) => {
         let i = index;
-        return <Column key ={item.Id+i} style={{paddingHorizontal:10, backgroundColor:WHITE, }}>
-            <CardRectangle  rippleColor={MAIN_FOURTH} style={{ width:"100%", backgroundColor:WHITE, borderBottomWidth:0.5, borderColor:MAIN_FOURTH}} onPress = {() => console.log("")}>
+        return <Column key ={item.Id+i} style={{paddingHorizontal:10, backgroundColor:screen.darkmode ? DARK_SECOND : WHITE, }}>
+            <CardRectangle  rippleColor={MAIN_FOURTH} style={{ width:"100%", backgroundColor:screen.darkmode ? DARK_SECOND : WHITE, borderBottomWidth:0.5, borderColor:screen.darkmode ? DARK : MAIN_FOURTH}} onPress = {() => console.log("")}>
                     
                 <Row style={{justifyContent:"space-between", alignItems:"center", zIndex:1}}>
-                    <Texts numberOfLines={1} ellipsizeMode='tail' style={{color:item.IsActive == "1" ? MAIN_CONTRAST : MAIN,fontSize:20, fontWeight:"500"}}>{item.Name}</Texts>
+                    <Texts numberOfLines={1} ellipsizeMode='tail' style={{color:item.IsActive == "1" ? MAIN_CONTRAST : screen.darkmode ? MAIN_THIRD : MAIN,fontSize:20, fontWeight:"500"}}>{item.Name}</Texts>
                    
                 </Row>
                 <Row style={{justifyContent:"space-between", alignItems:"center", zIndex:1}}>
-                    <Texts numberOfLines={1} ellipsizeMode='tail' style={{color:MAIN_THIRD,fontSize:13, marginBottom:5}}>{item.Description}</Texts>
+                    <Texts numberOfLines={1} ellipsizeMode='tail' style={{color:screen.darkmode ? GREY : MAIN_THIRD,fontSize:13, marginBottom:5}}>{item.Description}</Texts>
                 </Row>
                 
                
@@ -83,7 +96,7 @@ const SprintScreen = memo(({navigation, screen, sprint, route, dispatch, ...prop
     }
 
     return <Aux>
-            <Foundation style={{backgroundColor:LIGHT}} scrollable = {false}>
+            <Foundation style={{backgroundColor:screen.darkmode ? DARK : LIGHT}} scrollable = {false}>
                 <StatusBar backgroundColor="rgba(0, 0, 0, 0.3)" barStyle="light-content" hidden={false} translucent={true}/>
                 <ContainerBox style={{marginTop:40, flex:1}}>
                     <Column  style={{ paddingHorizontal:20}}> 
@@ -97,14 +110,14 @@ const SprintScreen = memo(({navigation, screen, sprint, route, dispatch, ...prop
                         <Row style = {{ zIndex:1, marginBottom:-24, justifyContent: 'flex-end'}}>
                             {/* <ButtonIconCircle  rippleColor={WHITE} style={{backgroundColor:MAIN, elevation:0,  }} color={WHITE} size ={20} icon={"plus"} onPress={() => dispatch(screenLoading())}></ButtonIconCircle> */}
                             
-                            <ButtonIconCircle  rippleColor={WHITE} style={{backgroundColor:MAIN, elevation:0,  }} color={WHITE} size ={20} icon={"plus"} onPress={createSprint}></ButtonIconCircle>
+                            <ButtonIconCircle  rippleColor={WHITE} style={{backgroundColor:screen.darkmode ? MAIN_SECOND : MAIN, elevation:0,  }} color={WHITE} size ={20} icon={"plus"} onPress={createSprint}></ButtonIconCircle>
                         </Row>
                     </Column>
-                    <Column style={{justifyContent:"center", flex:1, backgroundColor:WHITE}}>
+                    <Column style={{justifyContent:"center", flex:1, backgroundColor:screen.darkmode ? DARK_SECOND : WHITE}}>
         
                         <ListDataLazy 
                             style={{paddingBottom:50}}
-                            refreshControl={<RefreshControl refreshing={screen.loading} onRefresh={onRefresh} />} 
+                            refreshControl={<RefreshControl progressBackgroundColor={screen.darkmode ? DARK_SECOND : WHITE} colors={screen.darkmode ? [GREY] : [MAIN_SECOND]} refreshing={screen.loading} onRefresh={onRefresh} />} 
                             alwaysBounceVertical={true} 
                             showsVerticalScrollIndicator={false} 
                             style={{flex:1}} 
@@ -122,19 +135,6 @@ const SprintScreen = memo(({navigation, screen, sprint, route, dispatch, ...prop
 
 });
 
-const styleAll = StyleSheet.create({
-    welcomeText:{
-        fontSize:17,
-        color:MAIN_SECOND,
-    },    
-    nameText: {
-        fontSize: 25,
-        fontWeight: "500",
-        flex: 4, 
-        flexWrap: 'wrap',
-        color:FONT,
-    },
-});
 
 const mapStateToProps = (state) => {
     const { sprint, screen } = state;

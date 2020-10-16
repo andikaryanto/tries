@@ -9,7 +9,7 @@ import Column from '../Column';
 import { TouchableNativeFeedback, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { RandomString } from '../../Helper/General';
 
-function BottomStandarTab({ state, descriptors, navigation, position, tabTitle, activeColor, inactiveColor }) {
+function BottomStandarTab({ state, descriptors, navigation, position, tabTitle, style, activeColor, inactiveColor }) {
     const focusedOptions = descriptors[state.routes[state.index].key].options;
   
     if (focusedOptions.tabBarVisible === false) {
@@ -17,7 +17,7 @@ function BottomStandarTab({ state, descriptors, navigation, position, tabTitle, 
     }
   
     return (
-      <View style={{ flexDirection: 'row',alignItems:"center", justifyContent:"space-between", paddingVertical:5, paddingHorizontal:20, backgroundColor:WHITE, elevation:10 }}>
+      <View style={{ flexDirection: 'row',alignItems:"center", justifyContent:"space-between", paddingVertical:5, paddingHorizontal:20,  elevation:10, ...style }}>
         
         {state.routes.map((route, index) => {
             const { options } = descriptors[route.key];

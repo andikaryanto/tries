@@ -1,7 +1,7 @@
 import React, { memo, useState, useRef, useEffect } from 'react'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { LIGHT, MAIN, MAIN_FOURTH, WHITE,  MAIN_SECOND, GREY, MAIN_CONTRAST, MAIN_THIRD, WARNING, FONT, MAIN_FONT } from '../../../Const/Colors';
+import { LIGHT, MAIN, MAIN_FOURTH, WHITE,  MAIN_SECOND, GREY, MAIN_CONTRAST, MAIN_THIRD, WARNING, FONT, MAIN_FONT, DARK } from '../../../Const/Colors';
 import { StyleSheet, Dimensions, StatusBar, I18nManager, TouchableWithoutFeedback, UIManager, findNodeHandle } from 'react-native';
 import ContainerBox from '../../../Components/Container/ContainerBox';
 import Texts from '../../../Components/Text';
@@ -36,7 +36,7 @@ import Done from './Done';
 import { setMineTask } from '../../../Actions/Module/Tasks';
 import { hideScreenLoader, showScreenLoader } from '../../../Components/Loader/ScreenLoader';
 
-const MyTasksScreen = memo(({dispatch, navigation, route,  ...props}) => {
+const MyTasksScreen = memo(({dispatch, navigation, route, screen, ...props}) => {
 
     const {projectId, projectName, activeSprint }  = route.params;
    
@@ -83,33 +83,33 @@ const MyTasksScreen = memo(({dispatch, navigation, route,  ...props}) => {
     
     return <>
         <Aux>
-            <Foundation style={{backgroundColor:LIGHT}} scrollable = {false} >
+            <Foundation style={{backgroundColor:screen.darkmode ? DARK : LIGHT}} scrollable = {false} >
                 <StatusBar backgroundColor="rgba(0, 0, 0, 0.3)" barStyle="light-content" hidden={false} translucent={true}/>
                
-                    <ContainerBox style={{flex:1, backgroundColor:WHITE}}>
-                        <Column style={{backgroundColor:WHITE, paddingHorizontal:20, paddingBottom:15}}>
+                    <ContainerBox style={{flex:1, backgroundColor:screen.darkmode ? DARK : WHITE}}>
+                        <Column style={{backgroundColor:screen.darkmode ? DARK : WHITE, paddingHorizontal:20, paddingBottom:15}}>
                             <Row style={{justifyContent:"space-between", paddingTop:40, paddingBottom:10, alignItems:"center"}}>
                                 
                             <   MyAvatar onPress ={() => navigation.navigate("ProfileScreen")}></MyAvatar>
                                 <Column style={{width:"80%", justifyContent:"center"}}>
                                     <Row>
-                                        <Username numberOfLines={1} ellipsizeMode='tail' style={{fontSize:30, color:MAIN}} startText={"Hello"}/>
+                                        <Username numberOfLines={1} ellipsizeMode='tail' style={{fontSize:30, color:screen.darkmode ? MAIN_THIRD : MAIN}} startText={"Hello"}/>
                                         {/* <Texts numberOfLines={1} ellipsizeMode='tail' style={{fontSize:30, color:MAIN}}>Hello, Andik Aryanto</Texts> */}
                                     </Row>
                                     <Position style={{fontSize:15, color:GREY}}/>
 
-                                    <PopupMenu actions={['1', '2']}  onPress={() => { }}>
+                                    {/* <PopupMenu style={{backgroundColor:screen.darkmode ? DARK : WHITE}} actions={['1', '2']}  onPress={() => { }}> */}
                                         <Row>
                                             <Texts style={{fontSize:15, color:MAIN_CONTRAST}} >{activeSprint}</Texts>
                                             {/* <Icon  color={MAIN_CONTRAST} size={15} name={"chevron-small-down"} ></Icon> */}
                                         </Row>
-                                    </PopupMenu>
+                                    {/* </PopupMenu */}
                                     
                                 </Column>
                             </Row>
                             {/* <ButtonIconCircle onPress={() => refRBSheet.current.open()} icon={"twitter"} ></ButtonIconCircle> */}
 
-<Texts numberOfLines={1} ellipsizeMode='tail' style={{fontSize:18, color:MAIN}}>{projectName}</Texts>
+<Texts numberOfLines={1} ellipsizeMode='tail' style={{fontSize:18, color:screen.darkmode ? GREY : MAIN}}>{projectName}</Texts>
                         </Column>
                         <Tab.Navigator backBehavior={"none"} tabBarOptions={{
                             activeTintColor:MAIN_CONTRAST,
@@ -135,14 +135,15 @@ const MyTasksScreen = memo(({dispatch, navigation, route,  ...props}) => {
 
 // tabBar={(props) => <PilTabBar setSelected={setSelected} {...props} component={tabComponent} activeColor={MAIN_CONTRAST} activeFontColor={WHITE}/>} 
 
-// const mapStateToProps = (state) => {
-//     return {
-//         counter: "A"
-//     }
-// }
+const mapStateToProps = (props ) => {
+    const{ screen} = props;
+    return {
+        screen:screen
+    }
+}
 const mapDispatchToProps = { setMineTask }
 
 export default connect(
-null,
+    mapStateToProps,
 mapDispatchToProps
 )(MyTasksScreen);

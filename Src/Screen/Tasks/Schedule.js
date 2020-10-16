@@ -1,6 +1,6 @@
 import React, { memo, useState, useEffect, useRef } from 'react'
 import Foundation from '../../Components/Foundation';
-import { LIGHT,  MAIN_SECOND, WHITE, MAIN, WARNING, MAIN_FOURTH, FONT, MAIN_CONTRAST, GREY, MAIN_THIRD } from '../../Const/Colors';
+import { LIGHT,  MAIN_SECOND, WHITE, MAIN, WARNING, MAIN_FOURTH, FONT, MAIN_CONTRAST, GREY, MAIN_THIRD, DARK, DARK_SECOND } from '../../Const/Colors';
 // import { StatusBar } from 'expo-status-bar';
 import Column from '../../Components/Column';
 import Row from '../../Components/Row';
@@ -39,6 +39,53 @@ import { screenLoading } from '../../Actions/Screen';
 const ScheduleScreen = memo(({ navigation, item, dispatch, project, task,screen,  auth, ...props }) => {
     
     let controller = new AbortController();
+
+    const styleAll = StyleSheet.create({
+        welcomeText:{
+            fontSize:15,
+            color:screen.darkmode ? GREY : MAIN_SECOND,
+        },
+        schedule:{ 
+            backgroundColor:MAIN_FOURTH, 
+            borderTopLeftRadius:30, 
+            top:10,
+            flex:1
+        },  
+        
+        desc : {
+    
+            fontSize:15,
+            color:"#fff"
+        },
+        searchText:{
+    
+            fontSize:25,
+            color:"#fff"
+        },
+        nameText: {
+            fontSize: 30,
+            fontWeight: "500",
+            flex: 4, 
+            flexWrap: 'wrap',
+            color:screen.darkmode ? MAIN_THIRD : MAIN,
+        },
+        image: {
+            flex: 1,
+            resizeMode: "cover",
+            justifyContent: "center",
+            width: 400, height: 400
+        },
+        dataCard : {
+            marginRight:10,
+            // width: "60%",
+            // flexDirection: "row",
+            flexGrow:1
+        },
+        cardData : {
+            marginRight:10,
+            // width: "60%"
+        }
+    });
 
     let form = {
         Name:"",
@@ -248,15 +295,15 @@ const ScheduleScreen = memo(({ navigation, item, dispatch, project, task,screen,
 
     const renderBacklog = ({item, i}) => {
         let user = 0;
-        return <Column key ={item.Id+i} style={{paddingHorizontal:10, backgroundColor:WHITE, }}>
-            <CardRectangle padding={10} rippleColor={MAIN_FOURTH} style={{ width:"100%", backgroundColor:WHITE, borderBottomWidth:0.5, borderColor:MAIN_FOURTH}} onLongPress={() => {onItemLongPress(item)}} onPress = {() => moveToTask(item)}>
+        return <Column key ={item.Id+i} style={{paddingHorizontal:10, backgroundColor:screen.darkmode ? DARK_SECOND : WHITE, }}>
+            <CardRectangle padding={10} rippleColor={MAIN_FOURTH} style={{ width:"100%", backgroundColor:screen.darkmode ? DARK_SECOND : WHITE, borderBottomWidth:0.5, borderColor:screen.darkmode ? DARK : MAIN_FOURTH}} onLongPress={() => {onItemLongPress(item)}} onPress = {() => moveToTask(item)}>
                     
                 <Row style={{alignItems:"center", zIndex:1, }}>
-                    <Texts numberOfLines={1} ellipsizeMode='tail' style={{color:MAIN,fontSize:20, fontWeight:"500"}}>{item.Name}</Texts>
+                    <Texts numberOfLines={1} ellipsizeMode='tail' style={{color:screen.darkmode ? MAIN_THIRD : MAIN,fontSize:20, fontWeight:"500"}}>{item.Name}</Texts>
                    
                 </Row>
                 <Row style={{justifyContent:"space-between", alignItems:"center", zIndex:1}}>
-                    <Texts numberOfLines={1} ellipsizeMode='tail' style={{color:MAIN_THIRD,fontSize:13, marginBottom:5}}>{item.Created}</Texts>
+                    <Texts numberOfLines={1} ellipsizeMode='tail' style={{color:screen.darkmode ? WHITE : MAIN_THIRD,fontSize:13, marginBottom:5}}>{item.Created}</Texts>
                 </Row>
                 {
                    item.Tasks.map((task, i) => {
@@ -285,7 +332,7 @@ const ScheduleScreen = memo(({ navigation, item, dispatch, project, task,screen,
                         }
 
                         return <Column key ={task.Name+i}>
-                            {showName ? <Texts numberOfLines={3} ellipsizeMode='tail' style={{color:MAIN_SECOND, fontSize:16, marginLeft:20, marginTop:(i > 0 && showName) ? 10 : 0}}>{task.AssignTo}</Texts> : null}
+                            {showName ? <Texts numberOfLines={3} ellipsizeMode='tail' style={{color:screen.darkmode ? MAIN_FOURTH : MAIN_SECOND, fontSize:16, marginLeft:20, marginTop:(i > 0 && showName) ? 10 : 0}}>{task.AssignTo}</Texts> : null}
                             <Row style={{width:"93%", alignItems:"center"}}>
                                 <Icon name={"dot-single"} color={GREY} style={{marginLeft:7}}></Icon>
                                 {/* <Texts numberOfLines={3} ellipsizeMode='tail' style={{color:GREY, marginLeft:10, fontSize:16}}>- </Texts> */}
@@ -305,8 +352,8 @@ const ScheduleScreen = memo(({ navigation, item, dispatch, project, task,screen,
     }
 
     return <Aux>
-        <Foundation style={{backgroundColor:LIGHT}} scrollable = {false}>
-            <StatusBar backgroundColor="rgba(0, 0, 0, 0.3)" barStyle="dark-content" hidden={false} translucent={true}/>
+        <Foundation style={{backgroundColor:screen.darkmode ? DARK : LIGHT}} scrollable = {false}>
+            <StatusBar backgroundColor="rgba(0, 0, 0, 0.3)" barStyle="light-content" hidden={false} translucent={true}/>
             <ContainerBox style={{marginTop:40, flex:1}}>
                 <Column  style={{ paddingHorizontal:20}}> 
                     <Row style={{justifyContent:"space-between"}}>
@@ -336,36 +383,35 @@ const ScheduleScreen = memo(({ navigation, item, dispatch, project, task,screen,
                     </Row>
                     
                 </Column>
-                <Expandable toggle={expandAdavance} maxHeight={110} marginBottom ={-10} paddingHorizontal={20} paddingVertical={10} style={{backgroundColor:WHITE}} >
+                <Expandable toggle={expandAdavance} maxHeight={110} marginBottom ={-10} paddingHorizontal={20} paddingVertical={10} style={{backgroundColor:screen.darkmode ? DARK : WHITE}} >
                     <Row style={{justifyContent:"space-between", alignItems:"center"}}>
                         <Row style={{alignItems:"center"}}>
-                            <Icon name={"funnel"} color={MAIN} />
-                            <Texts style={{color:MAIN, fontSize:20, marginLeft:5}}>Filters</Texts>
+                            <Icon name={"funnel"} color={screen.darkmode ? GREY : MAIN} />
+                            <Texts style={{color:screen.darkmode ? GREY :MAIN, fontSize:20, marginLeft:5}}>Filters</Texts>
                         </Row>
                         <ButtonStandart onPress={onRefresh} style={{paddingHorizontal:10, borderRadius:20, backgroundColor:MAIN_CONTRAST}} uppercase={false} fontColor={WHITE} rippleColor={MAIN_CONTRAST} height={30}>Go</ButtonStandart>
                     </Row>
-                    <Texts style={{color:MAIN_SECOND, fontSize:15, marginTop:5}}>Status</Texts>
+                    <Texts style={{color:screen.darkmode ? GREY : MAIN_SECOND, fontSize:15, marginTop:5}}>Status</Texts>
                     <Row style={{marginTop:5}}>
                         {
                             task.statusFilter.map((e, i) => {
                                 
-                                return   <Checkbox textColor={MAIN_SECOND} text={e.text} key={RandomString(10)} item={e} checkedColor={MAIN_CONTRAST} isChecked={e.selected} onValueChange={onValueChange}>
+                                return   <Checkbox textColor={screen.darkmode ? GREY : MAIN_SECOND} text={e.text} key={RandomString(10)} item={e} checkedColor={MAIN_CONTRAST} isChecked={e.selected} onValueChange={onValueChange}>
 
                                 </Checkbox>  
                             })
                         }
-                        
                     </Row>
                 </Expandable>
                 <Column align={"center"} style={{justifyContent:"center", marginBottom:-14, zIndex:1, marginHorizontal:20}}>
-                    <ButtonIconCircle onPress={onExpand} rippleColor={LIGHT} width={24} style={{backgroundColor:MAIN}} size={16} icon={!expandAdavance ? "chevron-small-down" : "chevron-small-up"} color={WHITE}/>
+                    <ButtonIconCircle onPress={onExpand} rippleColor={LIGHT} width={24} style={{backgroundColor:screen.darkmode ? MAIN_SECOND : MAIN}} size={16} icon={!expandAdavance ? "chevron-small-down" : "chevron-small-up"} color={WHITE}/>
                 </Column>
                 <ProgressBarLine percentage={project.selected.ProjectDone} color={MAIN_CONTRAST} thick={2}/>
-                <Column style={{flex:1, backgroundColor:WHITE}}> 
+                <Column style={{flex:1, backgroundColor:screen.darkmode ? DARK_SECOND :WHITE}}> 
                   
                     <ListDataLazy 
                         style={{paddingBottom:50}}
-                        refreshControl={<RefreshControl refreshing={screen.loading} onRefresh={onRefresh} />} 
+                        refreshControl={<RefreshControl progressBackgroundColor={screen.darkmode ? DARK_SECOND : WHITE} colors={screen.darkmode ? [GREY] : [MAIN_SECOND]} refreshing={screen.loading} onRefresh={onRefresh} />} 
                         alwaysBounceVertical={true} 
                         showsVerticalScrollIndicator={false} 
                         style={{flex:1}} 
@@ -380,7 +426,7 @@ const ScheduleScreen = memo(({ navigation, item, dispatch, project, task,screen,
             </ContainerBox> 
         </Foundation>
         { (project.selected.IsYours && showAddButton ) ? <Column style={{ borderRadius:30, position:"absolute", bottom:10, right:10}}>
-            <ButtonBlock icon="plus" onPress={onBackLocPress} paddingHorizontal={20} rippleColor={MAIN} fontColor={MAIN} height={45} fontSize={18}  style={{elevation:5, backgroundColor:WHITE , borderRadius:30}} uppercase={false}>Story</ButtonBlock>
+            <ButtonBlock icon="plus" onPress={onBackLocPress} paddingHorizontal={20} rippleColor={MAIN} fontColor={ screen.darkmode ? WHITE : MAIN} height={45} fontSize={18}  style={{elevation:5, backgroundColor:screen.darkmode ? DARK_SECOND : WHITE , borderRadius:30}} uppercase={false}>Story</ButtonBlock>
         </Column> : null}
        
         <RBSheet
@@ -490,49 +536,3 @@ export default connect(
     mapDispatchToProps
 )(ScheduleScreen);
 
-const styleAll = StyleSheet.create({
-    welcomeText:{
-        fontSize:15,
-        color:MAIN_SECOND,
-    },
-    schedule:{ 
-        backgroundColor:MAIN_FOURTH, 
-        borderTopLeftRadius:30, 
-        top:10,
-        flex:1
-    },  
-    
-    desc : {
-
-        fontSize:15,
-        color:"#fff"
-    },
-    searchText:{
-
-        fontSize:25,
-        color:"#fff"
-    },
-    nameText: {
-        fontSize: 30,
-        fontWeight: "500",
-        flex: 4, 
-        flexWrap: 'wrap',
-        color:MAIN,
-    },
-    image: {
-        flex: 1,
-        resizeMode: "cover",
-        justifyContent: "center",
-        width: 400, height: 400
-    },
-    dataCard : {
-        marginRight:10,
-        // width: "60%",
-        // flexDirection: "row",
-        flexGrow:1
-    },
-    cardData : {
-        marginRight:10,
-        // width: "60%"
-    }
-});

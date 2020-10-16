@@ -6,15 +6,16 @@ import BottomStandartTab from '../../Components/BottomTabBar/BottomStandarTab';
 import Row from '../../Components/Row';
 import Circle from '../../Components/Circle';
 import Texts from '../../Components/Text';
-import { MAIN_THIRD, LIGHT, MAIN, MAIN_CONTRAST, WHITE, GREY } from '../../Const/Colors';
+import { MAIN_THIRD, LIGHT, MAIN, MAIN_CONTRAST, WHITE, GREY, DARK_SECOND, DARK } from '../../Const/Colors';
 import Icon from 'react-native-vector-icons/Entypo';
 import Column from '../../Components/Column';
 import { RandomString } from '../../Helper/General';
 import TaskCheckScreen from '../Tasks/TaskCheck';
 import CalendarScreen from '../Tasks/Calendar';
+import { connect } from 'react-redux';
 
 const Tab = createBottomTabNavigator();
-const ProjectEachScreen = memo(({route, navigation}) => {
+const ProjectEachScreen = memo(({route, navigation, screen}) => {
     const { projectId, projectName, isYours } = route.params;
     
     
@@ -37,7 +38,13 @@ const ProjectEachScreen = memo(({route, navigation}) => {
     })
     
   return (
-    <Tab.Navigator backBehavior={"none"} tabBar={props => <BottomStandartTab {...props} {...props} tabTitle={tabTitle} activeColor={MAIN} inactiveColor={GREY}/>}>
+    <Tab.Navigator tabBarOptions={{
+      // style:{backgroundColor:MAIN_CONTRAST},
+      // tabStyle:{backgroundColor:screen.darkmode ? DARK : WHITE}
+      // activeTintColor:MAIN_THIRD
+      tabStyle:{backgroundColor:MAIN_CONTRAST}
+      
+    }} backBehavior={"none"} tabBar={props => <BottomStandartTab style={{backgroundColor:screen.darkmode ? DARK_SECOND : WHITE}} {...props} {...props} tabTitle={tabTitle} activeColor={screen.darkmode ? MAIN_THIRD : MAIN} inactiveColor={GREY}/>}>
       <Tab.Screen name="Home" >{props => <ScheduleScreen {...props} item={projectId} navigation={navigation} />}</Tab.Screen>
       {/* <Tab.Screen name="Calendar" >{props => <CalendarScreen {...props} route={route} item={projectId} navigation={navigation} />}</Tab.Screen> */}
       <Tab.Screen name="Sprint" >{props => <SprintScreen {...props} route={route} item={projectId} navigation={navigation} />}</Tab.Screen>
@@ -47,4 +54,15 @@ const ProjectEachScreen = memo(({route, navigation}) => {
   );
 });
 
-export default ProjectEachScreen;
+const mapStateToProps = (state) => {
+  const { screen } = state;
+  return {
+      screen:screen
+  }
+}
+
+
+export default connect(
+  mapStateToProps,
+  null
+)(ProjectEachScreen);

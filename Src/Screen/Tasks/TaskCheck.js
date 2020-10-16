@@ -11,7 +11,7 @@ import Row from '../../Components/Row';
 import Texts from '../../Components/Text';
 import ListDataLazy from '../../Components/List/ListDataLazy';
 import Aux from '../../Components/Auxx';
-import { LIGHT, MAIN_CONTRAST, MAIN_SECOND, MAIN_FOURTH, FONT, GREY, WHITE, MAIN } from '../../Const/Colors';
+import { LIGHT, MAIN_CONTRAST, MAIN_SECOND, MAIN_FOURTH, FONT, GREY, WHITE, MAIN, DARK, MAIN_THIRD, DARK_SECOND } from '../../Const/Colors';
 import { RandomString } from '../../Helper/General';
 import CardRectangle from '../../Components/Card/CardRectangle';
 import Checkbox from '../../Components/Checkbox/Checkbox';
@@ -22,10 +22,58 @@ import RBSheet from 'react-native-raw-bottom-sheet';
 import StandartInput from '../../Components/Input/StandartInput';
 import AvatarSelectable from '../../Components/Avatar/AvatarSelectable';
 import Alert from '../../Components/Alert/Alert';
+import { connect } from 'react-redux';
 
-const TaskCheckScreen = memo(({route, navigation, ...props}) => {
+const TaskCheckScreen = memo(({route, navigation, screen, ...props}) => {
 
     let controller = new AbortController();
+
+    const styleAll = StyleSheet.create({
+        welcomeText:{
+            fontSize:15,
+            color: MAIN_SECOND,
+        },
+        schedule:{ 
+            backgroundColor:MAIN_FOURTH, 
+            borderTopLeftRadius:30, 
+            top:10,
+            flex:1
+        },  
+        
+        desc : {
+    
+            fontSize:15,
+            color:"#fff"
+        },
+        searchText:{
+    
+            fontSize:25,
+            color:"#fff"
+        },
+        nameText: {
+            fontSize: 25,
+            fontWeight: "500",
+            flex: 4, 
+            flexWrap: 'wrap',
+            color:screen.darkmode ? MAIN_THIRD :MAIN,
+        },
+        image: {
+            flex: 1,
+            resizeMode: "cover",
+            justifyContent: "center",
+            width: 400, height: 400
+        },
+        dataCard : {
+            marginRight:10,
+            // width: "60%",
+            // flexDirection: "row",
+            flexGrow:1
+        },
+        cardData : {
+            marginRight:10,
+            // width: "60%"
+        }
+    });
 
     const { projectId, projectName } = route.params;
 
@@ -140,23 +188,23 @@ const TaskCheckScreen = memo(({route, navigation, ...props}) => {
     }
 
     return <Aux>
-        <Foundation style={{backgroundColor:LIGHT}} scrollable = {false}>
-            <StatusBar backgroundColor="rgba(0, 0, 0, 0.3)" barStyle="dark-content" hidden={false} translucent={true}/>
+        <Foundation style={{backgroundColor:screen.darkmode ? DARK : LIGHT}} scrollable = {false}>
+            <StatusBar backgroundColor="rgba(0, 0, 0, 0.3)" barStyle="light-content" hidden={false} translucent={true}/>
             <ContainerBox style={{marginTop:40, flex:1}}>
                 <Column  style={{ paddingHorizontal:20, marginBottom:20}}> 
                     <Row style={{justifyContent:"space-between"}}>
                         <Texts numberOfLines={2} ellipsizeMode='tail' style={styleAll.nameText}>{projectName}</Texts>
                      
                     </Row>
-                    <Texts style={{fontSize:17, color:MAIN_SECOND}} numberOfLines={2} ellipsizeMode='tail' >Story you should check and mark as done</Texts>
+                    <Texts style={{fontSize:17, color:screen.darkmode ? GREY :MAIN_SECOND}} numberOfLines={2} ellipsizeMode='tail' >Story you should check and mark as done</Texts>
                     
                 </Column>
                 
-                <Column style={{flex:1, backgroundColor:WHITE, height:"100%"}}> 
+                <Column style={{flex:1, backgroundColor:screen.darkmode ? DARK_SECOND : WHITE, height:"100%"}}> 
                 
                     <ListDataLazy 
                         
-                        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />} 
+                        refreshControl={<RefreshControl progressBackgroundColor={screen.darkmode ? DARK_SECOND : WHITE} colors={screen.darkmode ? [GREY] : [MAIN_SECOND]} refreshing={refreshing} onRefresh={onRefresh} />} 
                         alwaysBounceVertical={true} 
                         showsVerticalScrollIndicator={false} 
                         style={{flex:1}} 
@@ -184,51 +232,19 @@ const TaskCheckScreen = memo(({route, navigation, ...props}) => {
 
 });
 
-const styleAll = StyleSheet.create({
-    welcomeText:{
-        fontSize:15,
-        color:MAIN_SECOND,
-    },
-    schedule:{ 
-        backgroundColor:MAIN_FOURTH, 
-        borderTopLeftRadius:30, 
-        top:10,
-        flex:1
-    },  
-    
-    desc : {
 
-        fontSize:15,
-        color:"#fff"
-    },
-    searchText:{
 
-        fontSize:25,
-        color:"#fff"
-    },
-    nameText: {
-        fontSize: 25,
-        fontWeight: "500",
-        flex: 4, 
-        flexWrap: 'wrap',
-        color:MAIN,
-    },
-    image: {
-        flex: 1,
-        resizeMode: "cover",
-        justifyContent: "center",
-        width: 400, height: 400
-    },
-    dataCard : {
-        marginRight:10,
-        // width: "60%",
-        // flexDirection: "row",
-        flexGrow:1
-    },
-    cardData : {
-        marginRight:10,
-        // width: "60%"
+const mapStateToProps = (state) => {
+    const { sprint, screen } = state;
+    return {
+        screen:screen,
+        sprint:sprint
     }
-});
+}
 
-export default TaskCheckScreen;
+// const mapDispatchToProps = { setSprints, screenLoading }
+
+export default connect(
+    mapStateToProps,
+null
+)(TaskCheckScreen);
