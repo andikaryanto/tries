@@ -122,7 +122,7 @@ const ProfileScreen = memo(({navigation, dispatch, auth, screen, ...props}) => {
                 <Column style={{ flex:1, height:"100%",}}>
                     <ImageBackground  style={{flex:1,zIndex:1, paddingHorizontal:10, paddingBottom:20}}
                         imageStyle={{ borderBottomLeftRadius:40, borderBottomRightRadius:40, }}
-                        source={profile.Photo == null ? require('../Assets/Img/blankphoto.jpg') : {uri: !profile.LoadLocally ? BASE_URL+profile.Photo : profile.Photo}}>
+                        source={profile.Photo == null ? require('../Assets/Img/blankphotoo.jpg') : {uri: !profile.LoadLocally ? BASE_URL+profile.Photo : profile.Photo}}>
                         <Column style={{flex:1}}>
                         </Column>
                         <Row style={{justifyContent:"flex-end"}}>

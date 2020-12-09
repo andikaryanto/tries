@@ -1,0 +1,1 @@
+keytool -genkey -v -keystore scrum.keystore -storepass ratrace182 -alias scrum-release-key -keypass ratrace182 -keyalg RSA -keysize 2048 -validity 10000

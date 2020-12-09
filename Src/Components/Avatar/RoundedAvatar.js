@@ -17,7 +17,7 @@ const RoundedAvatar = memo(({style, onPress, ...props}) => {
               <ImageBackground
                   style={styles}
                   imageStyle={{ borderRadius: 15 }}
-                  source={require('../../Assets/Img/blankphoto.jpg')}
+                  source={require('../../Assets/Img/blankphotoo.jpg')}
                   />
               </View>
           </TouchableWithoutFeedback>

@@ -48,7 +48,7 @@ const MyAvatar = memo(({style, onPress, ...props}) => {
         <ImageBackground
             style={styles}
             imageStyle={{ borderRadius: 15 }}
-            source={photo == null ? require('../../Assets/Img/blankphoto.jpg') : {uri:BASE_URL+photo}}
+            source={photo == null ? require('../../Assets/Img/blankphotoo.jpg') : {uri:BASE_URL+photo}}
             />
         </View>
 });

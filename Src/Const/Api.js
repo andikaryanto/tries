@@ -1,4 +1,4 @@
-export const BASE_URL = "http://192.168.1.90:8889/PhpScrum/";
+export const BASE_URL = "http://192.168.43.141/PhpScrum/";
 export const API = BASE_URL + "api/";
 export const AUTH = API+"login/";
 export const REGISTER = API+"register";
