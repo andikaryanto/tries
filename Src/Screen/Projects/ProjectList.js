@@ -44,6 +44,7 @@ const ProjectList = memo(({dispatch, navigation, projects, screen, data, render,
           setProjects(result);
       })
       .catch(err => {
+        console.log(err.message);
           screenLoading(false);
       });
     }

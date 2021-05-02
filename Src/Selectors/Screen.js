@@ -5,18 +5,24 @@ import axios from 'axios'
 export const getData = async (url, controller, params = {}, header={}) => {
    
     let token = await getToken();
+    // console.log(token);
     return new Promise((resolve, reject) => {
 
     
         const requestOptions = {
            
             params:{
-                ...params,
-                Authorization :  token
+                ...params
+            },
+            headers : {
+                ...header,
+                "Authorization" :token,
+                // 'Content-Type': 'application/json'
             }
             // signal:controller.signal
         };
         let endpoit = url;
+        console.log(params);
         axios.get(endpoit, requestOptions)
         .then(results => {
             if(results.status === 200){
@@ -48,8 +54,12 @@ export const getDataList = async (url, controller,  params={}, header = {}) => {
     return new Promise((resolve, reject) => {
         const requestOptions = {
             params:{
-                ...params,
-                Authorization :  token
+                ...params
+            },
+            headers : {
+                ...header,
+                "Authorization" :token,
+                // 'Content-Type': 'application/json'
             }
         };
 
@@ -89,12 +99,11 @@ export const postData = async (url, controller, body = {}, params = {}, header =
             
             headers: { 
                 'Content-Type': 'application/json',
-                // "Authorization" :token,
+                "Authorization" :token,
                 ...header
             },
             params:{
-                ...params,
-                Authorization :  token
+                ...params
             }
             // signal:controller.signal
         };
@@ -102,6 +111,7 @@ export const postData = async (url, controller, body = {}, params = {}, header =
         let endpoit = url;
         axios.post(endpoit, JSON.stringify(body), requestOptions)
         .then(results => {
+
             if(results.status === 200){
                 return results.data;
             } else {
@@ -119,6 +129,7 @@ export const postData = async (url, controller, body = {}, params = {}, header =
             }
         })
         .catch(err => {
+
             if(err != null)
                 reject({message:err.message})
             
@@ -202,12 +213,11 @@ export const deleteData = async (url, controller, body= {}, header = {}) => {
         const requestOptions = {            
             headers: { 
                 'Content-Type': 'application/json',
-                // "Authorization" :token,
+                "Authorization" :token,
                 ...header
             },
             params:{
-                ...body,
-                Authorization :  token
+                ...body
             }
             // signal:controller.signal
         };

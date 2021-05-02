@@ -44,7 +44,7 @@ const ProjectEachScreen = memo(({route, navigation, screen}) => {
       // activeTintColor:MAIN_THIRD
       tabStyle:{backgroundColor:MAIN_CONTRAST}
       
-    }} backBehavior={"none"} tabBar={props => <BottomStandartTab style={{backgroundColor:screen.darkmode ? DARK_SECOND : WHITE}} {...props} {...props} tabTitle={tabTitle} activeColor={screen.darkmode ? MAIN_THIRD : MAIN} inactiveColor={GREY}/>}>
+    }} backBehavior={"none"} tabBar={props => <BottomStandartTab style={{borderRadius: 25, backgroundColor:screen.darkmode ? DARK_SECOND : WHITE, position: "absolute", bottom:5, marginBottom:10, marginHorizontal:10}} {...props} {...props} tabTitle={tabTitle} activeColor={screen.darkmode ? MAIN_THIRD : MAIN} inactiveColor={GREY}/>}>
       <Tab.Screen name="Home" >{props => <ScheduleScreen {...props} item={projectId} navigation={navigation} />}</Tab.Screen>
       {/* <Tab.Screen name="Calendar" >{props => <CalendarScreen {...props} route={route} item={projectId} navigation={navigation} />}</Tab.Screen> */}
       <Tab.Screen name="Sprint" >{props => <SprintScreen {...props} route={route} item={projectId} navigation={navigation} />}</Tab.Screen>

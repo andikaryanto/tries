@@ -166,10 +166,12 @@ const ScheduleScreen = memo(({ navigation, item, dispatch, project, task,screen,
     const saveBacklog = () => {
         postData(CREATE_BACKLOG, controller, form)
         .then(result => {
+            console.log(result);
             refRBSheetBackLog.current.close();
             loadData();
         })
         .catch(err => {
+            console.log(err.message);
             Snackbar.show({
                 text:err.message,
                 duration: Snackbar.LENGTH_SHORT
@@ -293,9 +295,11 @@ const ScheduleScreen = memo(({ navigation, item, dispatch, project, task,screen,
     let startDate = new Date(project.selected.StartDate);
     let endDate = new Date(project.selected.EndDate);
 
-    const renderBacklog = ({item, i}) => {
+    const renderBacklog = ({item, index}) => {
         let user = 0;
-        return <Column key ={item.Id+i} style={{paddingHorizontal:10, backgroundColor:screen.darkmode ? DARK_SECOND : WHITE, }}>
+        let i = index;
+        let lastIndex = (project.selected.Backlogs.length - 1) == i;
+        return <Column key ={item.Id+i} style={{paddingBottom:lastIndex ? 70 : 0,paddingHorizontal:10, backgroundColor:screen.darkmode ? DARK_SECOND : WHITE }}>
             <CardRectangle padding={10} rippleColor={MAIN_FOURTH} style={{ width:"100%", backgroundColor:screen.darkmode ? DARK_SECOND : WHITE, borderBottomWidth:0.5, borderColor:screen.darkmode ? DARK : MAIN_FOURTH}} onLongPress={() => {onItemLongPress(item)}} onPress = {() => moveToTask(item)}>
                     
                 <Row style={{alignItems:"center", zIndex:1, }}>
@@ -332,7 +336,7 @@ const ScheduleScreen = memo(({ navigation, item, dispatch, project, task,screen,
                         }
 
                         return <Column key ={task.Name+i}>
-                            {showName ? <Texts numberOfLines={3} ellipsizeMode='tail' style={{color:screen.darkmode ? MAIN_FOURTH : MAIN_SECOND, fontSize:16, marginLeft:20, marginTop:(i > 0 && showName) ? 10 : 0}}>{task.AssignTo}</Texts> : null}
+                            {showName ? <Texts numberOfLines={3} ellipsizeMode='tail' style={{ color:screen.darkmode ? MAIN_FOURTH : MAIN_SECOND, fontSize:16, marginLeft:20, marginTop:(i > 0 && showName) ? 10 : 0}}>{task.AssignTo}</Texts> : null}
                             <Row style={{width:"93%", alignItems:"center"}}>
                                 <Icon name={"dot-single"} color={GREY} style={{marginLeft:7}}></Icon>
                                 {/* <Texts numberOfLines={3} ellipsizeMode='tail' style={{color:GREY, marginLeft:10, fontSize:16}}>- </Texts> */}
@@ -425,7 +429,7 @@ const ScheduleScreen = memo(({ navigation, item, dispatch, project, task,screen,
 
             </ContainerBox> 
         </Foundation>
-        { (project.selected.IsYours && showAddButton ) ? <Column style={{ borderRadius:30, position:"absolute", bottom:10, right:10}}>
+        { (project.selected.IsYours && showAddButton ) ? <Column style={{ borderRadius:30, position:"absolute", bottom:80, right:10}}>
             <ButtonBlock icon="plus" onPress={onBackLocPress} paddingHorizontal={20} rippleColor={MAIN} fontColor={ screen.darkmode ? WHITE : MAIN} height={45} fontSize={18}  style={{elevation:5, backgroundColor:screen.darkmode ? DARK_SECOND : WHITE , borderRadius:30}} uppercase={false}>Story</ButtonBlock>
         </Column> : null}
        

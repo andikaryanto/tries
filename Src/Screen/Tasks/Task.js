@@ -11,7 +11,7 @@ import Row from '../../Components/Row';
 import Texts from '../../Components/Text';
 import ListDataLazy from '../../Components/List/ListDataLazy';
 import Aux from '../../Components/Auxx';
-import { LIGHT, MAIN_CONTRAST, MAIN_SECOND, MAIN_FOURTH, FONT, GREY, WHITE, MAIN } from '../../Const/Colors';
+import { LIGHT, MAIN_CONTRAST, MAIN_SECOND, MAIN_FOURTH, FONT, GREY, WHITE, MAIN, DARK, MAIN_THIRD, DARK_SECOND } from '../../Const/Colors';
 import { RandomString } from '../../Helper/General';
 import CardRectangle from '../../Components/Card/CardRectangle';
 import Checkbox from '../../Components/Checkbox/Checkbox';
@@ -28,6 +28,53 @@ import { setTaskDetails, setTasks } from '../../Actions/Module/Tasks';
 import { connect } from 'react-redux';
 
 const TaskScreen = memo(({route, navigation, screen, task, ...props}) => {
+
+    const styleAll = StyleSheet.create({
+        welcomeText:{
+            fontSize:15,
+            color:MAIN_SECOND,
+        },
+        schedule:{ 
+            backgroundColor:MAIN_FOURTH, 
+            borderTopLeftRadius:30, 
+            top:10,
+            flex:1
+        },  
+        
+        desc : {
+    
+            fontSize:15,
+            color:"#fff"
+        },
+        searchText:{
+    
+            fontSize:25,
+            color:"#fff"
+        },
+        nameText: {
+            fontSize: 30,
+            fontWeight: "500",
+            flex: 4, 
+            flexWrap: 'wrap',
+            color:screen.darkmode ? MAIN_THIRD : MAIN,
+        },
+        image: {
+            flex: 1,
+            resizeMode: "cover",
+            justifyContent: "center",
+            width: 400, height: 400
+        },
+        dataCard : {
+            marginRight:10,
+            // width: "60%",
+            // flexDirection: "row",
+            flexGrow:1
+        },
+        cardData : {
+            marginRight:10,
+            // width: "60%"
+        }
+    });
 
     let controller = new AbortController();
 
@@ -232,7 +279,7 @@ const TaskScreen = memo(({route, navigation, screen, task, ...props}) => {
         }
         
         let found = selectedTask.findIndex(x => x.Id == item.Id);
-        return <Column key ={RandomString(10)} style={{paddingHorizontal:10, backgroundColor:WHITE}}>
+        return <Column key ={RandomString(10)} style={{paddingHorizontal:10, backgroundColor:screen.darkmode ? DARK_SECOND : WHITE}}>
             {showName ? <Texts numberOfLines={3} ellipsizeMode='tail' style={{color:MAIN_SECOND, fontSize:20, marginLeft:10, paddingTop:10}}>{item.AssignTo}</Texts> : null}
             {/* <CardRectangle rippleColor={MAIN_FOURTH} style={{ width:"100%", backgroundColor:WHITE}} > */}
                 <Column key ={RandomString(10)} style={{marginTop:5, paddingHorizontal:10}}>
@@ -247,8 +294,8 @@ const TaskScreen = memo(({route, navigation, screen, task, ...props}) => {
                         style={{marginRight:10}}
                     /> : <Icon name={"dot-single"} color={GREY} style={{marginLeft:7}}></Icon>}
                         {/* <TouchableWithoutFeedback onPress={() => console.log("here")}> */}
-                        <CardRectangle style={{width:"90%", }} padding={5} rippleColor={MAIN_FOURTH} onPress={() => { moveToDetail(item)}}>
-                            <Texts numberOfLines={1} ellipsizeMode='tail' style={{color:MAIN, fontSize:16, marginHorizontal: 15}}>{item.Name} </Texts>
+                        <CardRectangle style={{width:"90%", backgroundColor:screen.darkmode ? DARK_SECOND : WHITE}} padding={5} rippleColor={MAIN_FOURTH} onPress={() => { moveToDetail(item)}}>
+                            <Texts numberOfLines={1} ellipsizeMode='tail' style={{color:screen.darkmode ? MAIN_THIRD : MAIN, fontSize:16, marginHorizontal: 15}}>{item.Name} </Texts>
                             <Texts numberOfLines={3} ellipsizeMode='tail' style={{color:GREY, fontSize:13, marginHorizontal: 15}}>{item.Description} </Texts>
                             <Texts numberOfLines={3} ellipsizeMode='tail' style={{color:color, fontSize:13, marginHorizontal: 15}}>{status} </Texts>
                             <Row style={{marginTop:10, alignItems:"center"}}>
@@ -267,7 +314,7 @@ const TaskScreen = memo(({route, navigation, screen, task, ...props}) => {
     }
 
     return <Aux>
-        <Foundation style={{backgroundColor:LIGHT}} scrollable = {false}>
+        <Foundation style={{backgroundColor:screen.darkmode ? DARK : LIGHT}} scrollable = {false}>
             <StatusBar backgroundColor="rgba(0, 0, 0, 0.3)" barStyle="dark-content" hidden={false} translucent={true}/>
             <ContainerBox style={{marginTop:40, flex:1}}>
                 <Column  style={{ paddingHorizontal:20, paddingBottom:IsYours ? 0 : 20}}> 
@@ -279,15 +326,15 @@ const TaskScreen = memo(({route, navigation, screen, task, ...props}) => {
                     { IsYours ? <Row style = {{ zIndex:1, marginBottom:-24, justifyContent: 'flex-end'}}>
                         {/* <ButtonIconCircle  rippleColor={WHITE} style={{backgroundColor:MAIN, elevation:0,  }} color={WHITE} size ={20} icon={"plus"} onPress={() => dispatch(screenLoading())}></ButtonIconCircle> */}
                         
-                        <ButtonIconCircle  rippleColor={WHITE} style={{backgroundColor:MAIN, elevation:0,  }} color={WHITE} size ={20} icon={"plus"} onPress={addTaskDeatail}></ButtonIconCircle>
+                        <ButtonIconCircle  rippleColor={WHITE} style={{backgroundColor:screen.darkmode ? MAIN_SECOND : MAIN, elevation:0,  }} color={WHITE} size ={20} icon={"plus"} onPress={addTaskDeatail}></ButtonIconCircle>
                     </Row> : null}
                 </Column>
                 
-                <Column style={{flex:1, backgroundColor:WHITE, height:"100%"}}> 
+                <Column style={{flex:1, backgroundColor:screen.darkmode ? DARK_SECOND :WHITE, height:"100%"}}> 
                 
                     <ListDataLazy 
                         
-                        refreshControl={<RefreshControl refreshing={screen.loading} onRefresh={onRefresh} />} 
+                        refreshControl={<RefreshControl progressBackgroundColor={screen.darkmode ? DARK_SECOND : WHITE} colors={screen.darkmode ? [GREY] : [MAIN_SECOND]} refreshing={screen.loading} onRefresh={onRefresh} />} 
                         alwaysBounceVertical={true} 
                         showsVerticalScrollIndicator={false} 
                         style={{flex:1}} 
@@ -356,52 +403,7 @@ const TaskScreen = memo(({route, navigation, screen, task, ...props}) => {
 
 });
 
-const styleAll = StyleSheet.create({
-    welcomeText:{
-        fontSize:15,
-        color:MAIN_SECOND,
-    },
-    schedule:{ 
-        backgroundColor:MAIN_FOURTH, 
-        borderTopLeftRadius:30, 
-        top:10,
-        flex:1
-    },  
-    
-    desc : {
 
-        fontSize:15,
-        color:"#fff"
-    },
-    searchText:{
-
-        fontSize:25,
-        color:"#fff"
-    },
-    nameText: {
-        fontSize: 30,
-        fontWeight: "500",
-        flex: 4, 
-        flexWrap: 'wrap',
-        color:MAIN,
-    },
-    image: {
-        flex: 1,
-        resizeMode: "cover",
-        justifyContent: "center",
-        width: 400, height: 400
-    },
-    dataCard : {
-        marginRight:10,
-        // width: "60%",
-        // flexDirection: "row",
-        flexGrow:1
-    },
-    cardData : {
-        marginRight:10,
-        // width: "60%"
-    }
-});
 
 const mapStateToProps = state => {
     const { task, screen } = state;

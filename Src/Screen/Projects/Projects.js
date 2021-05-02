@@ -21,61 +21,63 @@ import Position from '../Components/Position';
 import { screenLoading } from '../../Actions/Screen';
 import ProgressBarLine from '../../Components/ProgressBar/ProgressBarLine';
 
-const ProjectsScreen = memo(({navigation, screen, ...props}) => {
+const ProjectsScreen = memo(({ navigation, screen, ...props }) => {
     const styleAll = StyleSheet.create({
-        welcomeText:{
-            fontSize:17,
-            color:screen.darkmode ? GREY : MAIN_SECOND,
-        },    
+        welcomeText: {
+            fontSize: 17,
+            color: screen.darkmode ? GREY : MAIN_SECOND,
+        },
         nameText: {
             fontSize: 25,
             fontWeight: "500",
-            flex: 4, 
+            flex: 4,
             flexWrap: 'wrap',
-            color:screen.darkmode ? MAIN_THIRD : FONT,
+            color: screen.darkmode ? MAIN_THIRD : FONT,
         },
     });
-    
+
     return <Aux>
-            <Foundation style={{backgroundColor:screen.darkmode ? DARK : LIGHT}} scrollable = {false}>
-                <StatusBar backgroundColor="rgba(0, 0, 0, 0.3)" barStyle="light-content" hidden={false} translucent={true}/>
-                <ContainerBox style={{marginTop:40, flex:1}}>
-                    <Column  style={{ paddingHorizontal:20}}> 
-                        <Row style={{justifyContent:"space-between",paddingBottom:10, alignItems:"center"}}>
-                            <MyAvatar onPress ={() => navigation.navigate("ProfileScreen")}></MyAvatar>
-                            <Column style={{width:"80%", justifyContent:"center"}}>
-                                <Row>
-                                    <Username numberOfLines={1} 
-                                        ellipsizeMode='tail' 
-                                        style={{fontSize:30, color:screen.darkmode ? MAIN_THIRD : MAIN}} startText="Hello"/>
-                                </Row>
-                                <Position />
+        <Foundation style={{ backgroundColor: screen.darkmode ? DARK : LIGHT }} scrollable={false}>
+            <StatusBar backgroundColor="rgba(0, 0, 0, 0.3)" barStyle="light-content" hidden={false} translucent={true} />
+            <ContainerBox style={{ marginTop: 40, flex: 1 }}>
+                <Column style={{ paddingHorizontal: 20 }}>
+                    <Row style={{ justifyContent: "space-between", paddingBottom: 10, alignItems: "center" }} >
 
-                                
-                            </Column>
-                        </Row>
-                        <Row >
-                            <Texts numberOfLines={2} ellipsizeMode='tail' style={styleAll.nameText}>Projects</Texts>
-                            
-                        </Row>
-                        <Texts style={styleAll.welcomeText}>These are all running projects you interact with.</Texts>
-                        <Texts style={styleAll.welcomeText}>Or do you have plan to create one ?</Texts>
-                        
-                        <Row style = {{ zIndex:1, marginBottom:-24, justifyContent: 'flex-end'}}>
-                            {/* <ButtonIconCircle  rippleColor={WHITE} style={{backgroundColor:MAIN, elevation:0,  }} color={WHITE} size ={20} icon={"plus"} onPress={() => dispatch(screenLoading())}></ButtonIconCircle> */}
-                            {/* <Column style={{backgroundColor:LIGHT, borderRadius:50}}> */}
+                        <MyAvatar onPress={() => navigation.navigate("ProfileScreen")}></MyAvatar>
+                        <Column style={{ width: "80%", justifyContent: "center" }}>
+                            <Row>
+                                <Username numberOfLines={1}
+                                    ellipsizeMode='tail'
+                                    style={{ fontSize: 30, color: screen.darkmode ? MAIN_THIRD : MAIN }} startText="Hello" />
+                            </Row>
+                            <Position />
 
-                                <ButtonIconCircle  rippleColor={WHITE} style={{backgroundColor:screen.darkmode ? MAIN_SECOND : MAIN, elevation:0 }} color={screen.darkmode ? LIGHT : WHITE} size ={20} icon={"plus"} onPress={() => navigation.navigate("ProjectCreateScreen")}></ButtonIconCircle>
-                            {/* </Column> */}
-                        </Row>
-                    </Column>
-                    <Column style={{justifyContent:"center",paddingHorizontal:10, flex:1, backgroundColor:screen.darkmode ? DARK_SECOND : WHITE}}>
-        
-                        <ProjectList navigation={navigation}/>
-                    </Column>
-                </ContainerBox>
-            </Foundation>
-        </Aux>
+
+                        </Column>
+
+                    </Row>
+                    <Row >
+                        <Texts numberOfLines={2} ellipsizeMode='tail' style={styleAll.nameText}>Projects</Texts>
+
+                    </Row>
+                    <Texts style={styleAll.welcomeText}>These are all running projects you interact with.</Texts>
+                    <Texts style={styleAll.welcomeText}>Or do you have plan to create one ?</Texts>
+
+                    <Row style={{ zIndex: 1, marginBottom: -24, justifyContent: 'flex-end' }}>
+                        {/* <ButtonIconCircle  rippleColor={WHITE} style={{backgroundColor:MAIN, elevation:0,  }} color={WHITE} size ={20} icon={"plus"} onPress={() => dispatch(screenLoading())}></ButtonIconCircle> */}
+                        {/* <Column style={{backgroundColor:LIGHT, borderRadius:50}}> */}
+
+                        <ButtonIconCircle rippleColor={WHITE} style={{ backgroundColor: screen.darkmode ? MAIN_SECOND : MAIN, elevation: 0 }} color={screen.darkmode ? LIGHT : WHITE} size={20} icon={"plus"} onPress={() => navigation.navigate("ProjectCreateScreen")}></ButtonIconCircle>
+                        {/* </Column> */}
+                    </Row>
+                </Column>
+                <Column style={{ justifyContent: "center", paddingHorizontal: 10, flex: 1, backgroundColor: screen.darkmode ? DARK_SECOND : WHITE }}>
+
+                    <ProjectList navigation={navigation} />
+                </Column>
+            </ContainerBox>
+        </Foundation>
+    </Aux>
 
 
 });
@@ -85,7 +87,7 @@ const ProjectsScreen = memo(({navigation, screen, ...props}) => {
 const mapStateToProps = state => {
     const { screen } = state;
     return {
-        screen:screen
+        screen: screen
     }
 }
 
@@ -94,5 +96,5 @@ const mapStateToProps = state => {
 
 export default connect(
     mapStateToProps,
-null
+    null
 )(ProjectsScreen);
